@@ -41,23 +41,23 @@ export function Settings() {
         {/* Tabs */}
         <Tabs defaultValue="profile" className="w-full">
           <TabsList className="bg-surface border border-dev-charcoal mb-8 flex-wrap h-auto">
-            <TabsTrigger value="profile" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="profile" className="data-[state=active]:bg-dev-grey text-gray-400">
               <User className="h-4 w-4 mr-2" />
               Profile
             </TabsTrigger>
-            <TabsTrigger value="account" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="account" className="data-[state=active]:bg-dev-grey text-gray-400">
               <Lock className="h-4 w-4 mr-2" />
               Account
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="notifications" className="data-[state=active]:bg-dev-grey text-gray-400">
               <Bell className="h-4 w-4 mr-2" />
               Notifications
             </TabsTrigger>
-            <TabsTrigger value="privacy" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="privacy" className="data-[state=active]:bg-dev-grey text-gray-400">
               <Shield className="h-4 w-4 mr-2" />
               Privacy
             </TabsTrigger>
-            <TabsTrigger value="appearance" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="appearance" className="data-[state=active]:bg-dev-grey text-gray-400">
               <Palette className="h-4 w-4 mr-2" />
               Appearance
             </TabsTrigger>
@@ -66,21 +66,21 @@ export function Settings() {
           {/* Profile Settings */}
           <TabsContent value="profile" className="space-y-6">
             <Card className="bg-surface border-dev-charcoal p-6">
-              <h3 className="mb-6">Profile Information</h3>
+              <h3 className="mb-6 text-white">Profile Information</h3>
 
               <div className="space-y-6">
                 {/* Avatar */}
                 <div>
-                  <Label className="text-text-secondary mb-2 block">Profile Picture</Label>
+                  <Label className="text-text-secondary mb-2 block text-gray-400">Profile Picture</Label>
                   <div className="flex items-center gap-4">
                     <div className="h-20 w-20 rounded-lg bg-gradient-to-br from-dev-light to-dev-grey flex items-center justify-center text-2xl">
-                      AT
+                      EM
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" className="border-dev-charcoal hover:border-dev-light">
+                      <Button variant="outline" className="border-dev-charcoal hover:border-dev-light text-gray-400">
                         Upload New
                       </Button>
-                      <Button variant="outline" className="border-dev-charcoal hover:border-error hover:text-error">
+                      <Button variant="outline" className="border-dev-charcoal hover:border-error hover:text-error text-gray-400">
                         Remove
                       </Button>
                     </div>
@@ -97,8 +97,8 @@ export function Settings() {
                   <Input
                     id="name"
                     type="text"
-                    defaultValue="Alex Thompson"
-                    className="bg-background border-dev-charcoal focus:border-dev-light"
+                    defaultValue="Edwin Muchemi"
+                    className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                   />
                 </div>
 
@@ -110,8 +110,8 @@ export function Settings() {
                   <Input
                     id="username"
                     type="text"
-                    defaultValue="alexdev"
-                    className="bg-background border-dev-charcoal focus:border-dev-light font-mono"
+                    defaultValue="edwin"
+                    className="bg-background border-dev-charcoal focus:border-dev-light font-mono text-white"
                   />
                 </div>
 
@@ -123,7 +123,7 @@ export function Settings() {
                   <Textarea
                     id="bio"
                     defaultValue="Full-stack developer passionate about building innovative solutions. Open source contributor and tech enthusiast."
-                    className="bg-background border-dev-charcoal focus:border-dev-light"
+                    className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                   />
                 </div>
 
@@ -135,8 +135,8 @@ export function Settings() {
                   <Input
                     id="location"
                     type="text"
-                    defaultValue="San Francisco, CA"
-                    className="bg-background border-dev-charcoal focus:border-dev-light"
+                    defaultValue="Nairobi, kenya"
+                    className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                   />
                 </div>
 
@@ -148,14 +148,14 @@ export function Settings() {
                   <Input
                     id="website"
                     type="url"
-                    defaultValue="https://alexthompson.dev"
-                    className="bg-background border-dev-charcoal focus:border-dev-light"
+                    defaultValue="https://urbantrends.dev"
+                    className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                   />
                 </div>
               </div>
 
               <div className="flex justify-end gap-3 mt-6">
-                <Button variant="outline" className="border-dev-charcoal hover:border-dev-light">
+                <Button variant="outline" className="border-dev-charcoal hover:border-dev-light text-gray-400">
                   Cancel
                 </Button>
                 <Button className="bg-dev-light hover:bg-dev-light/80 text-dev-dark">
@@ -168,7 +168,7 @@ export function Settings() {
           {/* Account Settings */}
           <TabsContent value="account" className="space-y-6">
             <Card className="bg-surface border-dev-charcoal p-6">
-              <h3 className="mb-6">Account Settings</h3>
+              <h3 className="mb-6 text-white">Account Settings</h3>
 
               <div className="space-y-6">
                 {/* Email */}
@@ -179,8 +179,8 @@ export function Settings() {
                   <Input
                     id="email"
                     type="email"
-                    defaultValue="alex@example.com"
-                    className="bg-background border-dev-charcoal focus:border-dev-light"
+                    defaultValue="urbantrendsorganization@gmail.com"
+                    className="bg-background border-dev-charcoal focus:border-dev-light text-gray-400"
                   />
                   <p className="text-xs text-text-muted mt-2">
                     Your email is used for login and notifications
@@ -201,7 +201,7 @@ export function Settings() {
                         <Input
                           id="current-password"
                           type={showPassword ? 'text' : 'password'}
-                          className="bg-background border-dev-charcoal focus:border-dev-light pr-10"
+                          className="bg-background border-dev-charcoal focus:border-dev-light pr-10 text-gray-400"
                         />
                         <button
                           type="button"
@@ -219,7 +219,7 @@ export function Settings() {
                       <Input
                         id="new-password"
                         type="password"
-                        className="bg-background border-dev-charcoal focus:border-dev-light"
+                        className="bg-background border-dev-charcoal focus:border-dev-light text-gray-400"
                       />
                     </div>
                     <div>
@@ -229,7 +229,7 @@ export function Settings() {
                       <Input
                         id="confirm-password"
                         type="password"
-                        className="bg-background border-dev-charcoal focus:border-dev-light"
+                        className="bg-background border-dev-charcoal focus:border-dev-light text-gray-400"
                       />
                     </div>
                   </div>
@@ -237,7 +237,7 @@ export function Settings() {
               </div>
 
               <div className="flex justify-end gap-3 mt-6">
-                <Button variant="outline" className="border-dev-charcoal hover:border-dev-light">
+                <Button variant="outline" className="border-dev-charcoal hover:border-dev-light text-gray-500">
                   Cancel
                 </Button>
                 <Button className="bg-dev-light hover:bg-dev-light/80 text-dev-dark">
@@ -260,9 +260,9 @@ export function Settings() {
           {/* Notification Settings */}
           <TabsContent value="notifications" className="space-y-6">
             <Card className="bg-surface border-dev-charcoal p-6">
-              <h3 className="mb-6">Notification Preferences</h3>
+              <h3 className="mb-6 text-white">Notification Preferences</h3>
 
-              <div className="space-y-6">
+              <div className="space-y-6 text-white">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium mb-1">Email Notifications</p>
@@ -355,8 +355,8 @@ export function Settings() {
 
           {/* Privacy Settings */}
           <TabsContent value="privacy" className="space-y-6">
-            <Card className="bg-surface border-dev-charcoal p-6">
-              <h3 className="mb-6">Privacy Settings</h3>
+            <Card className="bg-surface border-dev-charcoal p-6 text-white">
+              <h3 className="mb-6 text-white">Privacy Settings</h3>
 
               <div className="space-y-6">
                 <div className="flex items-center justify-between">

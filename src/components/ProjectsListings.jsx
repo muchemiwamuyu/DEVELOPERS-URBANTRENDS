@@ -175,15 +175,15 @@ export function ProjectsListing() {
         {/* Tabs */}
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="bg-surface border border-dev-charcoal mb-6">
-            <TabsTrigger value="all" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="all" className="data-[state=active]:bg-dev-grey text-gray-400">
               <Code2 className="h-4 w-4 mr-2" />
               All Projects
             </TabsTrigger>
-            <TabsTrigger value="trending" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="trending" className="data-[state=active]:bg-dev-grey text-gray-400">
               <TrendingUp className="h-4 w-4 mr-2" />
               Trending
             </TabsTrigger>
-            <TabsTrigger value="recent" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="recent" className="data-[state=active]:bg-dev-grey text-gray-400">
               <Clock className="h-4 w-4 mr-2" />
               Recent
             </TabsTrigger>
@@ -305,7 +305,7 @@ function ProjectCard({ project }) {
                   size="sm"
                   onClick={() => setLiked(!liked)}
                   className={`border-dev-charcoal transition-colors ${
-                    liked ? 'bg-error/20 border-error text-error' : 'hover:border-dev-light'
+                    liked ? 'bg-error/20 border-error text-error' : 'hover:border-dev-light text-gray-400'
                   }`}
                 >
                   <Heart className={`h-4 w-4 mr-2 ${liked ? 'fill-current' : ''}`} />
@@ -315,7 +315,7 @@ function ProjectCard({ project }) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-dev-charcoal hover:border-dev-light"
+                    className="border-dev-charcoal hover:border-dev-light text-gray-400"
                   >
                     View Details
                   </Button>

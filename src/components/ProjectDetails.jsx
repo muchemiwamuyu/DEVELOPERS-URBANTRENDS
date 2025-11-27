@@ -119,7 +119,7 @@ Perfect for developers who want to:
             <Card className="bg-surface border-dev-charcoal p-8">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-grow">
-                  <h1 className="mb-3">{project.title}</h1>
+                  <h1 className="mb-3 text-gray-500">{project.title}</h1>
                   <p className="text-text-secondary text-lg mb-6">{project.description}</p>
                 </div>
               </div>
@@ -157,7 +157,7 @@ Perfect for developers who want to:
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 text-white">
                 <Button
                   onClick={() => setStarred(!starred)}
                   className={starred ? 'bg-warning text-dev-dark hover:bg-warning/80' : 'bg-dev-light text-dev-dark hover:bg-dev-light/80'}
@@ -219,7 +219,7 @@ Perfect for developers who want to:
                   </Button>
                 </a>
                 <a href={project.links.live} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="border-dev-charcoal hover:border-dev-light">
+                  <Button variant="outline" className="border-dev-charcoal hover:border-dev-light text-gray-500">
                     <Globe className="h-4 w-4 mr-2" />
                     Live Demo
                   </Button>
@@ -283,7 +283,7 @@ Perfect for developers who want to:
           <div className="space-y-6">
             {/* Author Info */}
             <Card className="bg-surface border-dev-charcoal p-6">
-              <h4 className="mb-4">Created by</h4>
+              <h4 className="mb-4 text-white">Created by</h4>
               <div className="flex items-start gap-3 mb-4">
                 <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-dev-light to-dev-grey flex items-center justify-center flex-shrink-0">
                   {project.author.avatar}
@@ -294,14 +294,14 @@ Perfect for developers who want to:
                 </div>
               </div>
               <p className="text-sm text-text-secondary mb-4">{project.author.bio}</p>
-              <Button variant="outline" className="w-full border-dev-charcoal hover:border-dev-light">
+              <Button variant="outline" className="w-full border-dev-charcoal hover:border-dev-light text-gray-400">
                 View Profile
               </Button>
             </Card>
 
             {/* Project Info */}
             <Card className="bg-surface border-dev-charcoal p-6">
-              <h4 className="mb-4">Project Info</h4>
+              <h4 className="mb-4 text-white">Project Info</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center gap-2 text-text-secondary">
                   <Calendar className="h-4 w-4" />
@@ -316,7 +316,7 @@ Perfect for developers who want to:
 
             {/* Related Projects */}
             <Card className="bg-surface border-dev-charcoal p-6">
-              <h4 className="mb-4">Related Projects</h4>
+              <h4 className="mb-4 text-white">Related Projects</h4>
               <div className="space-y-3">
                 {relatedProjects.map((related) => (
                   <Link

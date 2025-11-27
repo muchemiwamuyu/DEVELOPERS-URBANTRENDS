@@ -11,13 +11,13 @@ export function Dashboard() {
   const [likedProjects] = useState([1, 3]);
 
   const userProfile = {
-    name: 'Alex Thompson',
-    username: '@alexdev',
+    name: 'Edwin Muchemi',
+    username: '@edwin',
     bio: 'Full-stack developer passionate about building innovative solutions. Open source contributor and tech enthusiast.',
-    location: 'San Francisco, CA',
-    website: 'alexthompson.dev',
+    location: 'Nairobi, Kenya',
+    website: 'urbantrends.dev',
     joinDate: 'January 2024',
-    avatar: 'AT',
+    avatar: 'EM',
     followers: 1234,
     following: 567,
     projects: 12,
@@ -122,7 +122,7 @@ export function Dashboard() {
               <div className="flex-grow">
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 mt-4 lg:mt-6">
                   <div>
-                    <h1 className="mb-1">{userProfile.name}</h1>
+                    <h1 className="mb-1 text-gray-500">{userProfile.name}</h1>
                     <p className="text-text-secondary mb-3">{userProfile.username}</p>
                     <p className="text-text-secondary mb-4 max-w-2xl">{userProfile.bio}</p>
                     
@@ -141,7 +141,7 @@ export function Dashboard() {
                       </span>
                     </div>
 
-                    <div className="flex gap-6 mt-4">
+                    <div className="flex gap-6 mt-4 text-white">
                       <button className="hover:text-dev-light transition-colors">
                         <Github className="h-5 w-5" />
                       </button>
@@ -155,7 +155,7 @@ export function Dashboard() {
                   </div>
 
                   <Link to="/settings">
-                    <Button variant="outline" className="border-dev-charcoal hover:border-dev-light">
+                    <Button variant="outline" className="border-dev-charcoal hover:border-dev-light text-gray-300">
                       <Edit className="h-4 w-4 mr-2" />
                       Edit Profile
                     </Button>
@@ -165,15 +165,15 @@ export function Dashboard() {
                 {/* Stats */}
                 <div className="flex gap-6 mt-6 pt-6 border-t border-dev-charcoal">
                   <div>
-                    <span className="font-mono text-xl">{userProfile.projects}</span>
+                    <span className="font-mono text-xl text-gray-400">{userProfile.projects}</span>
                     <span className="text-text-secondary ml-2">Projects</span>
                   </div>
                   <div>
-                    <span className="font-mono text-xl">{userProfile.followers}</span>
+                    <span className="font-mono text-xl text-gray-400">{userProfile.followers}</span>
                     <span className="text-text-secondary ml-2">Followers</span>
                   </div>
                   <div>
-                    <span className="font-mono text-xl">{userProfile.following}</span>
+                    <span className="font-mono text-xl text-gray-400">{userProfile.following}</span>
                     <span className="text-text-secondary ml-2">Following</span>
                   </div>
                 </div>
@@ -189,7 +189,7 @@ export function Dashboard() {
               <div className="flex items-center justify-between mb-2">
                 <stat.icon className="h-5 w-5 text-dev-light" />
               </div>
-              <div className="font-mono text-2xl mb-1">{stat.value.toLocaleString()}</div>
+              <div className="font-mono text-2xl mb-1 text-gray-400">{stat.value.toLocaleString()}</div>
               <div className="text-sm text-text-secondary">{stat.label}</div>
             </Card>
           ))}
@@ -198,10 +198,10 @@ export function Dashboard() {
         {/* Tabs Section */}
         <Tabs defaultValue="projects" className="w-full">
           <TabsList className="bg-surface border border-dev-charcoal mb-6">
-            <TabsTrigger value="projects" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="projects" className="data-[state=active]:bg-dev-grey text-gray-400">
               My Projects
             </TabsTrigger>
-            <TabsTrigger value="activity" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="activity" className="data-[state=active]:bg-dev-grey text-gray-400">
               Activity
             </TabsTrigger>
           </TabsList>
@@ -239,7 +239,7 @@ export function Dashboard() {
                       <div className="flex flex-col lg:flex-row lg:justify-between gap-4">
                         <div className="flex-grow">
                           <Link to={`/project/${project.id}`}>
-                            <h4 className="mb-2 group-hover:text-dev-light transition-colors cursor-pointer">
+                            <h4 className="mb-2 group-hover:text-dev-light transition-colors cursor-pointer text-gray-400">
                               {project.title}
                             </h4>
                           </Link>
@@ -277,7 +277,7 @@ export function Dashboard() {
                           </div>
                         </div>
 
-                        <div className="flex lg:flex-col gap-2">
+                        <div className="flex lg:flex-col gap-2 text-white">
                           <Button
                             variant="outline"
                             className="border-dev-charcoal hover:border-dev-light flex-1 lg:flex-none"

@@ -154,30 +154,30 @@ export function Notifications() {
               <Bell className="h-4 w-4 text-dev-light" />
               <span className="text-sm text-text-secondary">Total</span>
             </div>
-            <div className="font-mono text-2xl">{notifications.length}</div>
+            <div className="font-mono text-2xl text-white">{notifications.length}</div>
           </Card>
           <Card className="bg-surface border-dev-charcoal p-4">
             <div className="flex items-center gap-2 mb-2">
               <Bell className="h-4 w-4 text-error" />
               <span className="text-sm text-text-secondary">Unread</span>
             </div>
-            <div className="font-mono text-2xl">{unreadCount}</div>
+            <div className="font-mono text-2xl text-gray-400">{unreadCount}</div>
           </Card>
           <Card className="bg-surface border-dev-charcoal p-4">
             <div className="flex items-center gap-2 mb-2">
               <MessageSquare className="h-4 w-4 text-info" />
               <span className="text-sm text-text-secondary">Comments</span>
             </div>
-            <div className="font-mono text-2xl">
+            <div className="font-mono text-2xl text-gray-400">
               {notifications.filter(n => n.type === 'comment').length}
             </div>
           </Card>
           <Card className="bg-surface border-dev-charcoal p-4">
             <div className="flex items-center gap-2 mb-2">
               <Star className="h-4 w-4 text-warning" />
-              <span className="text-sm text-text-secondary">Stars</span>
+              <span className="text-sm text-text-secondary ">Stars</span>
             </div>
-            <div className="font-mono text-2xl">
+            <div className="font-mono text-2xl text-gray-400">
               {notifications.filter(n => n.type === 'star').length}
             </div>
           </Card>
@@ -186,7 +186,7 @@ export function Notifications() {
         {/* Tabs */}
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="bg-surface border border-dev-charcoal mb-6">
-            <TabsTrigger value="all" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="all" className="data-[state=active]:bg-dev-grey text-gray-400">
               All
               {unreadCount > 0 && (
                 <Badge className="ml-2 bg-error border-none text-white text-xs h-5 px-2">
@@ -194,13 +194,13 @@ export function Notifications() {
                 </Badge>
               )}
             </TabsTrigger>
-            <TabsTrigger value="unread" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="unread" className="data-[state=active]:bg-dev-grey text-gray-400">
               Unread
             </TabsTrigger>
-            <TabsTrigger value="stars" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="stars" className="data-[state=active]:bg-dev-grey text-gray-400">
               Stars
             </TabsTrigger>
-            <TabsTrigger value="comments" className="data-[state=active]:bg-dev-grey">
+            <TabsTrigger value="comments" className="data-[state=active]:bg-dev-grey text-gray-400">
               Comments
             </TabsTrigger>
           </TabsList>
