@@ -7,10 +7,12 @@ import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Badge } from './ui/badge';
+import axios from 'axios';
 
 export function AddProject() {
   const navigate = useNavigate();
   const [tags, setTags] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null)
   const [tagInput, setTagInput] = useState('');
   const [formData, setFormData] = useState({
     title: '',
@@ -22,7 +24,7 @@ export function AddProject() {
   });
 
   const suggestedTags = [
-    'React', 'TypeScript', 'Node.js', 'Python', 'AI', 'Web3', 
+    'React', 'TypeScript', 'Node.js', 'Python', 'AI', 'Web3',
     'Mobile', 'DevOps', 'Database', 'API', 'Docker', 'AWS'
   ];
 
@@ -37,12 +39,67 @@ export function AddProject() {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log({ ...formData, tags });
-    navigate('/dashboard');
+  const handleImageUpload = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // Optional: limit file size (5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    alert("File is too large (max 5MB).");
+    return;
+  }
+
+  // Set preview
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setImagePreview(reader.result);
   };
+  reader.readAsDataURL(file);
+
+  // Set file in formData
+  setFormData({ ...formData, image: file });
+};
+
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    // Create FormData to handle file upload
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("shortDescription", formData.description);
+    data.append("longDescription", formData.longDescription);
+    data.append("category", formData.category);
+    data.append("tags", JSON.stringify(tags)); // send tags as JSON string
+    data.append("githubRepo", formData.githubUrl);
+    data.append("liveUrl", formData.liveUrl);
+
+    // Append image file if exists
+    if (formData.image) {
+      data.append("image", formData.image);
+    }
+
+    const response = await axios.post(
+      "https://urbantrends-backend-production-fde8.up.railway.app/developers/create",
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("Project created:", response.data);
+    navigate("/dashboard");
+  } catch (error) {
+    console.error(
+      "Failed to create project:",
+      error.response?.data || error.message
+    );
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-background py-8">
@@ -71,7 +128,7 @@ export function AddProject() {
                   placeholder="Enter your project title"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="bg-background border-dev-charcoal focus:border-dev-light"
+                  className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                   required
                 />
               </div>
@@ -86,7 +143,7 @@ export function AddProject() {
                   placeholder="A brief one-line description of your project"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="bg-background border-dev-charcoal focus:border-dev-light"
+                  className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                   required
                 />
                 <p className="text-xs text-text-muted mt-2">
@@ -103,7 +160,7 @@ export function AddProject() {
                   placeholder="Provide a detailed description of your project, including features, technologies used, and any other relevant information..."
                   value={formData.longDescription}
                   onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
-                  className="bg-background border-dev-charcoal focus:border-dev-light min-h-[200px]"
+                  className="bg-background border-dev-charcoal focus:border-dev-light min-h-[200px] text-white"
                   required
                 />
               </div>
@@ -120,12 +177,12 @@ export function AddProject() {
                   required
                 >
                   <option value="">Select a category</option>
-                  <option value="web">Web Development</option>
-                  <option value="mobile">Mobile Development</option>
-                  <option value="ai">AI/Machine Learning</option>
-                  <option value="devops">DevOps/Infrastructure</option>
-                  <option value="blockchain">Blockchain/Web3</option>
-                  <option value="tools">Developer Tools</option>
+                  <option value="web">Web</option>
+                  <option value="mobile">Mobile</option>
+                  <option value="ai">AI</option>
+                  <option value="devops">DevOps</option>
+                  <option value="blockchain">Blockchain</option>
+                  <option value="tools">Developer</option>
                   <option value="other">Other</option>
                 </select>
               </div>
@@ -224,7 +281,7 @@ export function AddProject() {
                   placeholder="https://github.com/username/repo"
                   value={formData.githubUrl}
                   onChange={(e) => setFormData({ ...formData, githubUrl: e.target.value })}
-                  className="bg-background border-dev-charcoal focus:border-dev-light"
+                  className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                 />
               </div>
 
@@ -239,32 +296,57 @@ export function AddProject() {
                   placeholder="https://your-project.com"
                   value={formData.liveUrl}
                   onChange={(e) => setFormData({ ...formData, liveUrl: e.target.value })}
-                  className="bg-background border-dev-charcoal focus:border-dev-light"
+                  className="bg-background border-dev-charcoal focus:border-dev-light text-white"
                 />
               </div>
             </div>
           </Card>
 
           {/* Project Images */}
-          <Card className="bg-surface border-dev-charcoal p-6 mb-6">
-            <h3 className="mb-6">Project Images</h3>
+<Card className="bg-surface border-dev-charcoal p-6 mb-6">
+  <h3 className="mb-6">Project Images</h3>
 
-            <div className="space-y-4">
-              <div className="border-2 border-dashed border-dev-charcoal rounded-lg p-12 text-center hover:border-dev-light transition-colors cursor-pointer group">
-                <ImageIcon className="h-12 w-12 mx-auto mb-4 text-text-muted group-hover:text-dev-light transition-colors" />
-                <p className="text-text-secondary mb-2">
-                  Click to upload or drag and drop
-                </p>
-                <p className="text-sm text-text-muted">
-                  PNG, JPG or GIF (max. 5MB)
-                </p>
-              </div>
+  <div className="space-y-4">
+    {/* clickable upload area */}
+    <label
+      htmlFor="project-image"
+      className="border-2 border-dashed border-dev-charcoal rounded-lg p-12 text-center hover:border-dev-light transition-colors cursor-pointer group"
+    >
+      {imagePreview ? (
+        <img
+          src={imagePreview}
+          alt="Preview"
+          className="mx-auto rounded-lg max-h-64 object-cover"
+        />
+      ) : (
+        <>
+          <ImageIcon className="h-12 w-12 mx-auto mb-4 text-text-muted group-hover:text-dev-light transition-colors" />
+          <p className="text-text-secondary mb-2">
+            Click to upload or drag and drop
+          </p>
+          <p className="text-sm text-text-muted">
+            PNG, JPG or GIF (max. 5MB)
+          </p>
+        </>
+      )}
+    </label>
 
-              <p className="text-xs text-text-muted">
-                Add screenshots or images of your project to help others understand what it does.
-              </p>
-            </div>
-          </Card>
+    {/* hidden input */}
+    <input
+      id="project-image"
+      type="file"
+      accept="image/*"
+      className="hidden"
+      onChange={handleImageUpload}
+    />
+
+    <p className="text-xs text-text-muted">
+      Add screenshots or images of your project to help others understand what it does.
+    </p>
+  </div>
+</Card>
+
+
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-end">
