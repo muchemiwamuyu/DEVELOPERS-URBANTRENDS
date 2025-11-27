@@ -20,7 +20,7 @@ export function Header() {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-dev-light to-dev-grey">
               <Code2 className="h-6 w-6 text-dev-dark" />
             </div>
-            <span className="font-mono text-xl">Developer Hub</span>
+            <span className="font-mono text-xl">Urbantrends-Developers</span>
           </Link>
 
           {/* Desktop Navigation */}
