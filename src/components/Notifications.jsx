@@ -7,6 +7,7 @@ import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 export function Notifications() {
+
   const [notifications, setNotifications] = useState([
     {
       id: 1,

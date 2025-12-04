@@ -8,6 +8,7 @@ import { AddProject } from './components/AddProjects'
 import { Notifications } from './components/Notifications'
 import { Settings } from './components/Settings'
 import { Header } from './components/Header'
+import { Toaster } from 'sonner'
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
           />
           
         </Routes>
+
+        <Toaster position='top-right' theme='dark'/>
 
       </div>
       

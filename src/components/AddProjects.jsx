@@ -8,11 +8,14 @@ import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Badge } from './ui/badge';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
+import { toast } from 'sonner';
 
 export function AddProject() {
   const navigate = useNavigate();
   const [tags, setTags] = useState([]);
   const [imagePreview, setImagePreview] = useState(null)
+  const { isAuthenticated, user, loginWithPopup } = useAuth0();
   const [tagInput, setTagInput] = useState('');
   const [formData, setFormData] = useState({
     title: '',
@@ -40,65 +43,113 @@ export function AddProject() {
   };
 
   const handleImageUpload = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+    const file = e.target.files[0];
+    if (!file) return;
 
-  // Optional: limit file size (5MB)
-  if (file.size > 5 * 1024 * 1024) {
-    alert("File is too large (max 5MB).");
-    return;
-  }
+    // Optional: limit file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert("File is too large (max 5MB).");
+      return;
+    }
 
-  // Set preview
-  const reader = new FileReader();
-  reader.onloadend = () => {
-    setImagePreview(reader.result);
+    // Set preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+
+    // Set file in formData
+    setFormData({ ...formData, image: file });
   };
-  reader.readAsDataURL(file);
 
-  // Set file in formData
-  setFormData({ ...formData, image: file });
-};
+
+
+  const sendProjectEmail = async (user) => {
+    if (!user?.email || !user?.name) {
+      console.error("User email or name is missing");
+      return;
+    }
+
+    try {
+      const payload = {
+        email: user.email, // Auth0 user's email
+        name: user.name,   // Auth0 user's name
+      };
+
+      const response = await axios.post(
+        "https://email-service-production-f8ad.up.railway.app/api/email/send",
+        payload
+      );
+
+      console.log("Email sent:", response.data);
+    } catch (error) {
+      console.error("Failed to send email:", error.response?.data || error.message);
+    }
+  };
+
 
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    // Create FormData to handle file upload
-    const data = new FormData();
-    data.append("title", formData.title);
-    data.append("shortDescription", formData.description);
-    data.append("longDescription", formData.longDescription);
-    data.append("category", formData.category);
-    data.append("tags", JSON.stringify(tags)); // send tags as JSON string
-    data.append("githubRepo", formData.githubUrl);
-    data.append("liveUrl", formData.liveUrl);
-
-    // Append image file if exists
-    if (formData.image) {
-      data.append("image", formData.image);
-    }
-
-    const response = await axios.post(
-      "https://urbantrends-backend-production-fde8.up.railway.app/developers/create",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    try {
+      // Check authentication
+      if (!isAuthenticated) {
+        // Trigger Auth0 login
+        return loginWithPopup(); // or loginWithRedirect() if you prefer redirect
       }
-    );
 
-    console.log("Project created:", response.data);
-    navigate("/dashboard");
-  } catch (error) {
-    console.error(
-      "Failed to create project:",
-      error.response?.data || error.message
-    );
-  }
-};
+      // Get user's email
+      const userEmail = user?.email;
+      if (!userEmail) {
+        alert("Could not get user email. Please try again.");
+        return;
+      }
+
+      // Log the email
+      console.log("Authenticated user email:", userEmail);
+
+      // Create FormData to handle file upload
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("shortDescription", formData.description);
+      data.append("longDescription", formData.longDescription);
+      data.append("category", formData.category);
+      data.append("tags", JSON.stringify(tags)); // send tags as JSON string
+      data.append("githubRepo", formData.githubUrl);
+      data.append("liveUrl", formData.liveUrl);
+      data.append("email", userEmail); // include user's email
+
+      // Append image file if exists
+      if (formData.image) {
+        data.append("image", formData.image);
+      }
+
+      const response = await axios.post(
+        "https://urbantrends-backend-production-fde8.up.railway.app/developers/create",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      await sendProjectEmail(user)
+
+      console.log("Project created:", response.data);
+      toast.success("projects successfully added")
+      navigate("/projects");
+    } catch (error) {
+      console.error(
+        "Failed to create project:",
+        error.response?.data || error.message
+      );
+    }
+  };
+
+
 
 
   return (
@@ -303,48 +354,48 @@ export function AddProject() {
           </Card>
 
           {/* Project Images */}
-<Card className="bg-surface border-dev-charcoal p-6 mb-6">
-  <h3 className="mb-6">Project Images</h3>
+          <Card className="bg-surface border-dev-charcoal p-6 mb-6">
+            <h3 className="mb-6">Project Images</h3>
 
-  <div className="space-y-4">
-    {/* clickable upload area */}
-    <label
-      htmlFor="project-image"
-      className="border-2 border-dashed border-dev-charcoal rounded-lg p-12 text-center hover:border-dev-light transition-colors cursor-pointer group"
-    >
-      {imagePreview ? (
-        <img
-          src={imagePreview}
-          alt="Preview"
-          className="mx-auto rounded-lg max-h-64 object-cover"
-        />
-      ) : (
-        <>
-          <ImageIcon className="h-12 w-12 mx-auto mb-4 text-text-muted group-hover:text-dev-light transition-colors" />
-          <p className="text-text-secondary mb-2">
-            Click to upload or drag and drop
-          </p>
-          <p className="text-sm text-text-muted">
-            PNG, JPG or GIF (max. 5MB)
-          </p>
-        </>
-      )}
-    </label>
+            <div className="space-y-4">
+              {/* clickable upload area */}
+              <label
+                htmlFor="project-image"
+                className="border-2 border-dashed border-dev-charcoal rounded-lg p-12 text-center hover:border-dev-light transition-colors cursor-pointer group"
+              >
+                {imagePreview ? (
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="mx-auto rounded-lg max-h-64 object-cover"
+                  />
+                ) : (
+                  <>
+                    <ImageIcon className="h-12 w-12 mx-auto mb-4 text-text-muted group-hover:text-dev-light transition-colors" />
+                    <p className="text-text-secondary mb-2">
+                      Click to upload or drag and drop
+                    </p>
+                    <p className="text-sm text-text-muted">
+                      PNG, JPG or GIF (max. 5MB)
+                    </p>
+                  </>
+                )}
+              </label>
 
-    {/* hidden input */}
-    <input
-      id="project-image"
-      type="file"
-      accept="image/*"
-      className="hidden"
-      onChange={handleImageUpload}
-    />
+              {/* hidden input */}
+              <input
+                id="project-image"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
 
-    <p className="text-xs text-text-muted">
-      Add screenshots or images of your project to help others understand what it does.
-    </p>
-  </div>
-</Card>
+              <p className="text-xs text-text-muted">
+                Add screenshots or images of your project to help others understand what it does.
+              </p>
+            </div>
+          </Card>
 
 
 
