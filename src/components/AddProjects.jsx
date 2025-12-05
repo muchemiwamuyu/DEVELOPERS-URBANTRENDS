@@ -149,6 +149,8 @@ export function AddProject() {
     }
   };
 
+  
+
 
 
 
@@ -249,7 +251,7 @@ export function AddProject() {
                 <Label htmlFor="tags" className="text-text-secondary mb-2 block">
                   Add Tags
                 </Label>
-                <div className="flex gap-2">
+                <div className="flex gap-2 ">
                   <Input
                     id="tags"
                     type="text"
